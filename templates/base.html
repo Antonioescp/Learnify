@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='imgs/icon.svg') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    {% block styles %}
+    {% endblock %}
+
+    <title>{% block title %}{% endblock %} - Learnify</title>
+</head>
+<body>
+    <div class="container-fluid" id="main-container">
+        <div class="row sticky-top" id="navbar">
+            <div class="col-3 col-sm-4 col-md-5 col-lg-8 d-flex align-items-center" >
+                <h1><a class="brand" href="{{ url_for('index') }}">Learnify</a></h1>
+                <a href="{{ url_for('courses') }}" class="ms-4 nav-option">Cursos</a>
+            </div>
+            <div class="col-9 col-sm-8 col-md-7 col-lg-4 d-flex align-items-center justify-content-end">
+                {% if not user %}
+                    <a class="button ms-3" href="{{ url_for('login') }}">Iniciar Sesion</a>
+                    <a class="button-white ms-3" href="{{ url_for('register') }}">Registrarse</a>
+                {% else %}
+                    <a href="{{ url_for('logout') }}" class="button ms-3">Cerrar Sesión</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="sticky-note">
+            {% for msg in get_flashed_messages() %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ msg }}
+                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+</body>
+</html>

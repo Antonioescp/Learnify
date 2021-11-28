@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Inicio{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css')}}">
+{% endblock %}
+
+{% block content %}
+    <!-- Jumbotron -->
+    <div class="d-flex flex-column justify-content-evenly" id="jumbotron">
+        <img id="main-image" src="{{ url_for('static', filename='imgs/icon.svg')}}" alt="icon">
+        <h1 id="title">La mejor manera de aprender.</h1>
+        <div class="col-12 d-flex justify-content-center align-items-start" id="buttons">
+            <a href="{{ url_for('courses') }}" class="button-large">Empezar</a>
+        </div>
+    </div>
+    <div class="row tile-container">
+        <div class="col-12 col-sm-6 col-lg-4 d-flex justify-content-center">
+            <div class="tile">
+                <img src="{{ url_for('static', filename='imgs/index/books.svg') }}" alt="">
+                <h1>Hecho para tus pequeños</h1>
+                <p>Aprende a tu propio ritmo y elige qué aprender.</p>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4 d-flex justify-content-center mt-5 mt-lg-0">
+            <div class="tile">
+                <img src="{{ url_for('static', filename='imgs/index/goal.svg') }}" alt="">
+                <h1>Un paso a la vez</h1>
+                <p>Recorre los temas paso a paso hasta que puedas alcanzar tu meta.</p>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4 d-flex justify-content-center mt-5 mt-lg-0">
+            <div class="tile">
+                <img src="{{ url_for('static', filename='imgs/index/reward.svg') }}" alt="">
+                <h1>Reconocimiento</h1>
+                <p>Se reconoceran tus logros a lo largo de cada curso.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/courses.css')}}">
+{% endblock %}
+
+{% block title %}Cursos{% endblock %}
+
+{% block content %}
+<div class="row d-flex justify-content-around tile-container">
+    {% for course in courses %}
+        <div class="col-12 col-sm-6 col-lg-4 d-flex justify-content-center">
+            <div class="clickable-tile">
+                <img src="{{ url_for('static', filename='imgs/courses/' + course.img_path) }}" alt="">
+                <h1>{{ course.title }}</h1>
+                <p>{{ course.short_description }}</p>
+                <div class="progress-bar">
+                    <div>0%</div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
