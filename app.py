@@ -50,6 +50,12 @@ def get_user(function):
         return function()
     return wrapper
 
+# Tables
+users_lessons = db.Table('lessons_users', db.Model.metadata,
+    db.Column('user_id', db.ForeignKey('users.id'), nullable=False),
+    db.Column('lesson_id', db.ForeignKey('lessons.id'), nullable=False),
+)
+
 
 # Models
 class User(db.Model):
