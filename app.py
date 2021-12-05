@@ -108,10 +108,25 @@ class Lesson(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(128))
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'), nullable=False)
+    options = db.relationship('Option', backref='lesson')
 
 
     def __repr__(self):
         return '<Lesson %r>' % self.title
+
+
+class Option(db.Model):
+    __tablename__ = 'options'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(128))
+    audio_fn = db.Column(db.String(128))
+    img_fn = db.Column(db.String(128))
+    lesson_id = db.Column(db.Integer, db.ForeignKey('lessons.id'), nullable=False)
+
+
+    def __repr__(self):
+        return '<Option %r>' % self.title
 
 
 # Routes
@@ -204,6 +219,17 @@ def course(course_id):
         return redirect(url_for('index'))
 
     return render_template('courses/course.html', course=course, lessons=course.lessons)
+
+
+@app.route('/lessons/<id>')
+@login_required
+@get_user
+def lesson(id):
+
+    lesson = Lesson.query.filter_by(id=id).first()
+
+    return render_template('courses/lesson.html', lesson=lesson)
+
 
 # Shell utils
 @app.shell_context_processor

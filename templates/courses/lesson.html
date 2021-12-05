@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title%}{{ lesson.course.title }} {{ lesson.title }}{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/courses/colores.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="tile-container d-flex row">
+    </div>
+{% endblock %}
