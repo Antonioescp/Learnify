@@ -1,17 +1,30 @@
 let welcomeHasFinished = false;
 
 window.addEventListener('load', (e) => {
-    console.log('hello!')
-    let welcomeAudio = new Audio('/static/audio/cursos/Colores-B.mp3');
+    
+    let player = new Audio('/static/audio/cursos/Colores-B.mp3');
+    let tiles = document.getElementsByClassName('clickable-tile');
+
+    // play each tile audio on user click
+    for (let idx = 0; idx < tiles.length; idx++) {
+        tiles[idx].addEventListener('click', e => {
+            if (welcomeHasFinished) {
+                player.pause();
+                player.src = tiles[idx].dataset.audio;
+                player.currentTime = 0;
+                player.play();
+            }
+        });
+    }
 
     // play audio on user interaction
     window.addEventListener('click', e => {
 
-        if (!welcomeHasFinished && welcomeAudio.paused) {
+        if (!welcomeHasFinished && player.paused) {
             
-            welcomeAudio.play();
+            player.play();
 
-            welcomeAudio.addEventListener('ended', e => {
+            player.addEventListener('ended', e => {
                 welcomeHasFinished = true;
             });
 

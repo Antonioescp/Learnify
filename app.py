@@ -239,5 +239,6 @@ def make_shell_context():
         migrate=migrate,
         User=User,
         Course=Course,
-        Lesson=Lesson
+        Lesson=Lesson,
+        Option=Option,
     )
