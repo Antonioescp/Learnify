@@ -34,28 +34,27 @@ def logout_required(function):
 
 def login_required(function):
     @wraps(function)
-    def wrapper():
+    def wrapper(**kwargs):
         if not session.get('user_id'):
             flash('Primero debes iniciar sesion')
             return redirect(url_for('login'))
         else:
-            return function()
+            return function(**kwargs)
     return wrapper
 
 
 def get_user(function):
     @wraps(function)
-    def wrapper():
+    def wrapper(**kwargs):
         g.user = User.query.filter_by(id=session.get('user_id')).first()
-        return function()
+        return function(**kwargs)
     return wrapper
-
+    
 # Tables
-users_lessons = db.Table('lessons_users', db.Model.metadata,
+lessons_users = db.Table('lessons_users', db.Model.metadata,
     db.Column('user_id', db.ForeignKey('users.id'), nullable=False),
     db.Column('lesson_id', db.ForeignKey('lessons.id'), nullable=False),
 )
-
 
 # Models
 class User(db.Model):
@@ -65,6 +64,7 @@ class User(db.Model):
 
     username = db.Column(db.String(64))
     password_hash = db.Column(db.String(128))
+    lessons = db.relationship('Lesson', backref=db.backref('users'), secondary=lessons_users)
 
     @property
     def password(self):
@@ -193,6 +193,17 @@ def courses():
     courses = Course.query.all()
     return render_template('courses/index.html', user=g.user, courses=courses)
 
+@app.route('/courses/<course_id>')
+@login_required
+def course(course_id):
+    
+    course = Course.query.filter_by(id=course_id).first()
+
+    if not course:
+        flash('Curso no encontrado.')
+        return redirect(url_for('index'))
+
+    return render_template('courses/course.html', course=course, lessons=course.lessons)
 
 # Shell utils
 @app.shell_context_processor
@@ -202,4 +213,5 @@ def make_shell_context():
         migrate=migrate,
         User=User,
         Course=Course,
+        Lesson=Lesson
     )
