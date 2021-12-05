@@ -3,7 +3,7 @@
 {% block title%}{{ lesson.course.title }} {{ lesson.title }}{% endblock %}
 
 {% block scripts %}
-    <script src="{{ url_for('static', filename='js/courses/' + lesson.title + '.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/courses/' + lesson.id|string + '.js') }}"></script>
 {% endblock %}
 
 {% block styles %}

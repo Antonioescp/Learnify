@@ -241,8 +241,80 @@ def make_shell_context():
     return dict( 
         db=db, 
         migrate=migrate,
+        seed=seed,
         User=User,
         Course=Course,
         Lesson=Lesson,
         Option=Option,
     )
+
+@app.cli.command('db-seed')
+def seed():
+
+    courses = [
+        Course(
+            title='Colores',
+            short_description='Aprende los colores fundamentales.', 
+            img_path='colors.svg',
+        ),
+        Course(
+            title='Números',
+            short_description='Aprende a contar.', 
+            img_path='numbers.svg',
+        ),
+    ]
+
+    lessons = [
+        Lesson(title='Colores básicos.', course_id=1),
+        Lesson(title='Un paso a la vez, contemos del 1 al 3.', course_id=2)
+    ]
+
+    options = [
+        Option(
+            title='Azul', 
+            audio_fn='Colores-Azul.mp3', 
+            img_fn='#006cff', 
+            lesson_id=1
+        ),
+        Option(
+            title='Rojo', 
+            audio_fn='Colores-Rojo.mp3', 
+            img_fn='#e32522', 
+            lesson_id=1
+        ),
+        Option(
+            title='Verde', 
+            audio_fn='Colores-Verde.mp3', 
+            img_fn='#5cf054', 
+            lesson_id=1
+        ),
+        Option(
+            title='Amarillo', 
+            audio_fn='Colores-Amarillo.mp3', 
+            img_fn='#fff945', 
+            lesson_id=1
+        ),
+        Option(
+            title='Uno o 1', 
+            audio_fn='Numeros-1.mp3', 
+            img_fn='1.svg', 
+            lesson_id=2
+        ),
+        Option(
+            title='Dos o 2', 
+            audio_fn='Numeros-2.mp3', 
+            img_fn='2.svg', 
+            lesson_id=2
+        ),
+        Option(
+            title='Tres o 3', 
+            audio_fn='Numeros-3.mp3', 
+            img_fn='3.svg', 
+            lesson_id=2
+        ),
+    ]
+
+    db.session.bulk_save_objects(courses)
+    db.session.bulk_save_objects(lessons)
+    db.session.bulk_save_objects(options)
+    db.session.commit()
