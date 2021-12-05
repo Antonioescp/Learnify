@@ -3,7 +3,7 @@
 {% block title%}{{ lesson.course.title }} {{ lesson.title }}{% endblock %}
 
 {% block scripts %}
-    <script src="{{ url_for('static', filename='js/courses/colores.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/courses/' + lesson.title + '.js') }}"></script>
 {% endblock %}
 
 {% block styles %}
@@ -15,7 +15,11 @@
         {% for option in lesson.options %}
             <div class="col-12 col-sm-6 col-lg-4 d-flex justify-content-center">
                 <div class="clickable-tile d-flex row justify-content-center" data-audio="{{ url_for('static', filename='audio/cursos/' + option.audio_fn) }}">
-                    <div style="background: {{option.img_fn}}; border-radius: 100%; width: 100px; height: 100px;"></div>
+                    {% if '#' not in option.img_fn %}
+                        <div style="background: url({{url_for('static', filename='imgs/lessons/' + option.img_fn)}}) center no-repeat; border-radius: 100%; width: 100px; height: 100px;"></div>
+                    {% else %}
+                        <div style="background: {{option.img_fn}}; border-radius: 100%; width: 100px; height: 100px;"></div>
+                    {% endif %}
                     <h1>{{ option.title }}</h1>
                 </div>
             </div>
