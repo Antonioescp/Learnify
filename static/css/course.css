@@ -1,0 +1,7 @@
+.tile, .clickable-tile {
+    text-align: left;
+}
+
+.tile {
+    gap: 0 2rem;
+}

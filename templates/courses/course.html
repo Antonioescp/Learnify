@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ course.title }}{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/course.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="row d-flex justify-content-around tile-container">
+    {% for lesson in lessons %}
+        <div class="col-12 d-flex justify-content-center">
+            <div class="tile d-flex column justify-content-between align-items-center">
+                <h1 class="text-left">{{ lesson.title }}</h1>
+                <a href="{{ url_for('lesson', id=lesson.id) }}" class="button">Empezar</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
